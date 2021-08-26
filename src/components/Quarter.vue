@@ -1,21 +1,27 @@
 <template>
-  <div
-    class="quarter"
-    :class="[checkActive, checkDisabled]"
-    @click="clickQuarter"
-  />
+  <div>
+    <div
+      class="quarter"
+      :class="[checkActive, checkDisabled]"
+      @click="clickQuarter"
+    />
+    <QuarterSound :numberQuarter="numberQuarter"  />
+  </div>
 </template>
 
 <script>
+import QuarterSound from "./QuarterSound.vue";
 export default {
+  components: {
+    QuarterSound,
+  },
   props: {
-    isQuarterActive: {
-      type: Boolean,
-      default: false,
-    },
     isQuarterDisabled: {
       type: Boolean,
       default: true,
+    },
+    numberActive: {
+      type: Number,
     },
     numberQuarter: {
       type: Number,
@@ -23,7 +29,8 @@ export default {
   },
   computed: {
     checkActive() {
-      return this.isQuarterActive == true ? "quarter_active" : "";
+      console.log(this.numberQuarter == this.numberActive)
+      return this.numberQuarter == this.numberActive ? "quarter_active" : "";
     },
     checkDisabled() {
       return this.isQuarterDisabled ? "quarter_disabled" : "";
@@ -31,7 +38,7 @@ export default {
   },
   methods: {
     clickQuarter() {
-      this.$emit("clickQuarter");
+      this.$emit("clickQuarter", this.numberQuarter);
     },
   },
 };

@@ -3,29 +3,33 @@
     <div class="half">
       <Quarter
         class="top-left-quarter"
-        :isQuarterActive="this.activeQuarter == 0"
-        :isQuarterDisabled="this.isQuartersDisabled"
-        @click="clickQuarter(0)"
+        :numberQuarter="0"
+        :numberActive="activeQuarter"
+        :isQuarterDisabled="isQuartersDisabled"
+        @click="clickQuarter"
       />
       <Quarter
         class="top-rigth-quarter"
-        :isQuarterActive="this.activeQuarter == 1"
-        :isQuarterDisabled="this.isQuartersDisabled"
-        @click="clickQuarter(1)"
+        :numberQuarter="1"
+        :numberActive="activeQuarter"
+        :isQuarterDisabled="isQuartersDisabled"
+        @click="clickQuarter"
       />
     </div>
     <div class="half">
       <Quarter
         class="bottom-left-quarter"
-        :isQuarterActive="this.activeQuarter == 2"
-        :isQuarterDisabled="this.isQuartersDisabled"
-        @click="clickQuarter(2)"
+        :numberQuarter="2"
+        :numberActive="activeQuarter"
+        :isQuarterDisabled="isQuartersDisabled"
+        @click="clickQuarter"
       />
       <Quarter
         class="bottom-rigth-quarter"
-        :isQuarterActive="this.activeQuarter == 3"
-        :isQuarterDisabled="this.isQuartersDisabled"
-        @click="clickQuarter(3)"
+        :numberQuarter="3"
+        :numberActive="activeQuarter"
+        :isQuarterDisabled="isQuartersDisabled"
+        @click="clickQuarter"
       />
     </div>
     <div class="center">
@@ -86,6 +90,9 @@ export default {
       return new Promise((resolve) => {
         console.log(number);
         this.activeQuarter = number;
+
+        console.log('показать')
+
         setTimeout(async () => {
           this.activeQuarter = -1;
           resolve();
