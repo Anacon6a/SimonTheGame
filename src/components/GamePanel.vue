@@ -3,33 +3,29 @@
     <div class="half">
       <Quarter
         class="top-left-quarter"
-        :numberQuarter="0"
-        :numberActive="activeQuarter"
-        :isQuarterDisabled="isQuartersDisabled"
-        @click="clickQuarter"
+        :isQuarterActive="this.activeQuarter == 0"
+        :isQuarterDisabled="this.isQuartersDisabled"
+        @click="clickQuarter(0)"
       />
       <Quarter
         class="top-rigth-quarter"
-        :numberQuarter="1"
-        :numberActive="activeQuarter"
-        :isQuarterDisabled="isQuartersDisabled"
-        @click="clickQuarter"
+        :isQuarterActive="this.activeQuarter == 1"
+        :isQuarterDisabled="this.isQuartersDisabled"
+        @click="clickQuarter(1)"
       />
     </div>
     <div class="half">
       <Quarter
         class="bottom-left-quarter"
-        :numberQuarter="2"
-        :numberActive="activeQuarter"
-        :isQuarterDisabled="isQuartersDisabled"
-        @click="clickQuarter"
+        :isQuarterActive="this.activeQuarter == 2"
+        :isQuarterDisabled="this.isQuartersDisabled"
+        @click="clickQuarter(2)"
       />
       <Quarter
         class="bottom-rigth-quarter"
-        :numberQuarter="3"
-        :numberActive="activeQuarter"
-        :isQuarterDisabled="isQuartersDisabled"
-        @click="clickQuarter"
+        :isQuarterActive="this.activeQuarter == 3"
+        :isQuarterDisabled="this.isQuartersDisabled"
+        @click="clickQuarter(3)"
       />
     </div>
     <div class="center">
