@@ -2,34 +2,30 @@
   <div class="game-panel">
     <div class="half">
       <Quarter
-        class="top-left-quarter"
         :numberQuarter="0"
         :numberActive="activeQuarter"
         :isQuarterDisabled="isQuartersDisabled"
-        @click="clickQuarter"
+        @clickQuarter="clickQuarter"
       />
       <Quarter
-        class="top-rigth-quarter"
         :numberQuarter="1"
         :numberActive="activeQuarter"
         :isQuarterDisabled="isQuartersDisabled"
-        @click="clickQuarter"
+        @clickQuarter="clickQuarter"
       />
     </div>
     <div class="half">
       <Quarter
-        class="bottom-left-quarter"
         :numberQuarter="2"
         :numberActive="activeQuarter"
         :isQuarterDisabled="isQuartersDisabled"
-        @click="clickQuarter"
+        @clickQuarter="clickQuarter"
       />
       <Quarter
-        class="bottom-rigth-quarter"
         :numberQuarter="3"
         :numberActive="activeQuarter"
         :isQuarterDisabled="isQuartersDisabled"
-        @click="clickQuarter"
+        @clickQuarter="clickQuarter"
       />
     </div>
     <div class="center">
@@ -57,7 +53,8 @@ export default {
       round: 0,
       sequence: [],
       remainingClics: 0,
-      timeout: 250,
+      timeoutBetweenShows: 200,
+      timeoutBetweenRounds: 1000
     };
   },
   methods: {
@@ -75,7 +72,7 @@ export default {
       for (const item of this.sequence) {
         await this.makeActive(item);
         if (this.sequence.indexOf(item) + 1 < this.sequence.length) {
-          await this.addTimeout();
+          await this.addTimeout(this.timeoutBetweenShows);
         }
       }
       this.isQuartersDisabled = false;
@@ -90,26 +87,22 @@ export default {
       return new Promise((resolve) => {
         console.log(number);
         this.activeQuarter = number;
-
-        console.log('показать')
-
         setTimeout(async () => {
           this.activeQuarter = -1;
           resolve();
-        }, this.timeInterval - this.timeout);
+        }, this.timeInterval - this.timeoutBetweenShows);
       });
     },
 
-    addTimeout() {
+    addTimeout(time) {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve();
-        }, this.timeout);
+        }, time);
       });
     },
 
     clickQuarter(pressedQuarter) {
-      if (this.isQuartersDisabled) return;
       if (
         this.sequence[this.sequence.length - this.remainingClics] ===
         pressedQuarter
@@ -126,7 +119,7 @@ export default {
     async startNextRound() {
       this.isQuartersDisabled = true;
       this.round++;
-      await this.addTimeout();
+      await this.addTimeout(this.timeoutBetweenRounds);
       this.showSequence();
     },
 
@@ -149,8 +142,6 @@ export default {
   background-color: black;
   border: 5px black solid;
   z-index: 99;
-  /* border-left: 15px black solid;
-  border-bottom: 15px black solid; */
 }
 
 .half {

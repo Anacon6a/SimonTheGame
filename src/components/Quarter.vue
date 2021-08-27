@@ -2,19 +2,14 @@
   <div>
     <div
       class="quarter"
-      :class="[checkActive, checkDisabled]"
+      :class="[quarters[numberQuarter], active, disabled]"
       @click="clickQuarter"
     />
-    <QuarterSound :numberQuarter="numberQuarter"  />
   </div>
 </template>
 
 <script>
-import QuarterSound from "./QuarterSound.vue";
 export default {
-  components: {
-    QuarterSound,
-  },
   props: {
     isQuarterDisabled: {
       type: Boolean,
@@ -27,18 +22,44 @@ export default {
       type: Number,
     },
   },
+  data() {
+    return {
+      quarters: [
+        "top-left-quarter",
+        "top-rigth-quarter",
+        "bottom-left-quarter",
+        "bottom-rigth-quarter",
+      ],
+    };
+  },
   computed: {
-    checkActive() {
-      console.log(this.numberQuarter == this.numberActive)
+    active() {
       return this.numberQuarter == this.numberActive ? "quarter_active" : "";
     },
-    checkDisabled() {
+    disabled() {
       return this.isQuarterDisabled ? "quarter_disabled" : "";
+    },
+  },
+  watch: {
+    numberActive(val) {
+      if (this.numberQuarter == val) {
+        this.playSound();
+      }
     },
   },
   methods: {
     clickQuarter() {
-      this.$emit("clickQuarter", this.numberQuarter);
+      if (!this.isQuarterDisabled) {
+        this.playSound();
+        this.$emit("clickQuarter", this.numberQuarter);
+      }
+    },
+    playSound() {
+      const sound = require(`../assets/audio/${this.numberQuarter}.ogg`);
+      const audio = new Audio(sound);
+      audio.play().catch((error) => {
+        console.error(error);
+      });
     },
   },
 };
